@@ -87,6 +87,9 @@ source angr/bin/activate
 pip install angr --upgrade
 deactivate
 
+#
+
+
 # oh-my-zsh
 sudo apt-get -y install zsh
 echo vagrant | sh -c "$(wget https://raw.github.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
@@ -108,16 +111,18 @@ git clone --depth 1 https://github.com/junegunn/fzf.git ~/.fzf
 
 ## GDB Tools
 # Install peda
-git clone https://github.com/longld/peda.git
+git clone https://github.com/longld/peda.git ~/peda
 # Install pwndbg
 git clone https://github.com/zachriggle/pwndbg
 # Install gef
 git clone https://github.com/hugsy/gef.git
 # Install voltron
 git clone https://github.com/snare/voltron.git
-pushd voltron
-./install.sh
-popd
+# Add Peda
+echo "source ~/peda/peda.py" >> ~/.gdbinit
+# pushd voltron
+# ./install.sh
+# popd
 
 # fixenv
 wget https://raw.githubusercontent.com/hellman/fixenv/master/r.sh
@@ -142,3 +147,9 @@ sudo apt-get -y install libc6:i386 libc6-dbg:i386 libncurses5:i386 libstdc++6:i3
 git clone https://github.com/Z3Prover/z3.git && cd z3
 python scripts/mk_make.py --python
 cd build; make && sudo make install
+
+# Install Zeratool
+cd ~
+git clone https://github.com/ChrisTheCoolHut/Zeratool
+cd Zeratool
+./install.sh

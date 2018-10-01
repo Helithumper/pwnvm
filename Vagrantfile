@@ -9,7 +9,8 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
   config.vm.provision :shell, :path => "vagrant_setup.sh", :privileged => false
 
   name = "pwn"
-  memory = "2048"
+  memory = "4096"
+  local_ctf_directory = "~/Documents/ctfs"
 
   config.vm.define "pwn", primary: true do |u64|
     u64.vm.network "private_network", ip: "10.10.10.10"
@@ -17,7 +18,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       override.vm.box ="geerlingguy/ubuntu1604"
       # Sync a folder between the host and all guests.
       # Uncomment this line (and adjust as you like)
-      #override.vm.synced_folder "~/code", "/code"
+      override.vm.synced_folder local_ctf_directory, "/ctfs", owner: "vagrant", group: "vagrant"
 
       vb.name = name
       vb.memory = memory

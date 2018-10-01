@@ -43,3 +43,33 @@ You should never have to open VirtualBox to manage the VMs. Everything can be do
 
 ## 32 bit VM
 Although the 64-bit linux vm should be able to do whatever you need, you can also set up a 32 bit version. To do this, simply do `vagrant up pwn32`. The 64-bit (default) VM is named simply "pwn".
+
+## Tools Installed
+* python3-pip
+* screen
+* gdb, gdb-multiarch
+* unzip
+* build-essential
+* unrar
+* foremost
+* htop
+* QEMU with MIPS/ARM
+* 32 Bit Tools
+* ARM Binutils
+* Pwntools
+* pwndbg
+* radare2
+* binwalk
+* capstone
+* angr
+* oh-my-zsh
+* tmux
+* fzf
+* gdb-peda
+* gdb-pwndbg
+* gdb-gef
+* gdb-voltron
+* fixenv
+* AFL Fuzzer
+* z3
+* Zeratool

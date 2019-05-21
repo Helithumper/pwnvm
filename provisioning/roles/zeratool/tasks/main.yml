@@ -1,0 +1,14 @@
+---
+## TODO: Port install.sh into actual tasks instead
+- name: "Ensure tools directory exists"
+  file:
+    path: /tools
+    state: directory
+    mode: '0755'
+- name: "Clone Zeratool Repository"
+  git:
+    repo: "https://github.com/ChrisTheCoolHut/Zeratool"
+    dest: /tools/zeratool
+
+- name: "Run install.sh script in /tools/zeratool"
+  command: /tools/zeratool/install.sh

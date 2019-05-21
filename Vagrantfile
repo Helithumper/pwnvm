@@ -6,33 +6,30 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
   config.ssh.username = "vagrant"
   config.ssh.forward_agent = true
-  config.vm.provision :shell, :path => "vagrant_setup.sh", :privileged => false
+  
+  config.vm.provision :ansible do |ansible|
+    ansible.playbook = "provisioning/playbook.yml"
+  end
 
-  name = "pwn"
+  name = "VIRTPWN"
   memory = "4096"
-  local_ctf_directory = "~/Documents/ctfs"
+  shared_directory = "~/Documents/"
 
-  config.vm.define "pwn", primary: true do |u64|
+  config.vm.define "VIRTPWN", primary: true do |u64|
     u64.vm.network "private_network", ip: "10.10.10.10"
     u64.vm.provider "virtualbox" do |vb, override|
-      override.vm.box ="geerlingguy/ubuntu1604"
-      # Sync a folder between the host and all guests.
-      # Uncomment this line (and adjust as you like)
-      override.vm.synced_folder local_ctf_directory, "/ctfs", owner: "vagrant", group: "vagrant"
+      override.vm.box ="geerlingguy/ubuntu1804"
+
+      ## For Syncing of CTF Directory between host and VM
+      override.vm.synced_folder shared_directory, "/host", owner: "vagrant", group: "vagrant"
 
       vb.name = name
       vb.memory = memory
       vb.gui = false
+      vb.cpus = 4
     end
     u64.vm.provider "libvirt" do |lv, override|
       override.vm.box = "algebro/ubuntu1604"
-
-      # Sync a folder between the host and all guests.
-      # Uncomment this line (and adjust as you like)
-      # NOTE: Requires installation of the nfs-server package on the host machine
-      # If `vagrant up` hangs at Mounting NFS folders, modify your firewall configuration
-      # to allow nfs, rpc, and mountd services
-      #override.vm.synced_folder "~/ctf", "/ctf", :nfs => true
       lv.memory = memory
       lv.graphics_type = "none"
     end

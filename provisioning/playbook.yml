@@ -1,0 +1,111 @@
+---
+- hosts: all
+  become: true
+  roles:
+  # ## Capstone Install
+  # - capstone
+  # ## PyCParser for PwnDBG
+  # - pycparser
+  # ## R2 Install
+  # - radare2
+  # ## Binwalk Install
+  # - binwalk
+  # ## Install Angr
+  # - angr
+  # ## Install Oh-My-ZSH
+  - oh-my-zsh
+  # ## Install FZF
+  # - fzf
+  # ## Install Peda
+  # - peda
+  # ## Install PwnDBG
+  # - pwndbg
+  # ## Install GEF
+  # - gef
+  # ## Install Voltron
+  # - voltron
+  # ## Install Fixenv
+  # - fixenv
+  # ## Install AFL
+  # - afl
+  #   ## Install Z3
+  # - z3
+  # ## Install Zeratool
+  # - zeratool
+  # ## Install Docker
+  # - docker
+  pre_tasks:
+    - name: Set Hostname
+      hostname:
+        name: VIRTPWN
+    - name: Install Aptitude
+      apt:
+        name: aptitude
+    - name: APT update and upgrade existing packages
+      apt:
+        upgrade: yes
+        update_cache: yes
+        cache_valid_time: 86400 # One Day
+
+    - name: Add Repositories
+      apt_repository:
+        repo: "{{ item }}"
+        state: present
+        validate_certs: no
+      with_items:
+      - deb http://mirrors.mit.edu/debian squeeze main
+      - deb http://www.emdebian.org/debian squeeze main
+    - name: APT install from list
+      apt:
+        name: "{{ packages }}"
+      vars:
+        packages:
+        - python3-pip
+        - screen
+        - gdb
+        - gdb-multiarch
+        - unzip
+        - build-essential
+        - unrar
+        - foremost
+        - htop
+        - qemu
+        - qemu-user
+        - qemu-user-static
+        - 'binfmt*'
+        - libc6-armhf-armel-cross
+        - debian-keyring
+        - debian-archive-keyring
+        - emdebian-archive-keyring
+        - libc6-mipsel-cross
+        - libc6-dev-armhf-cross
+        - libx32gcc-4.8-dev
+        - libc6-dev-i386
+        - python2.7
+        - python-pip 
+        - python-dev 
+        - git
+        - libssl-dev
+        - libffi-dev
+        - build-essential
+        - python-dev
+        - libffi-dev
+        - build-essential
+        - virtualenvwrapper
+        - zsh
+        - tmux
+        - libevent-dev
+        - libncurses-dev
+        - binutils-arm-linux-gnueabi
+
+## Architecture Setup
+
+## Enable 32 Bit binaries
+
+## Upgrade Pip
+
+## Pip Install Pwntools
+
+## Mkdir ~/tools
+
+## Uninstall Capstone

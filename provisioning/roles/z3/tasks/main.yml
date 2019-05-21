@@ -1,0 +1,30 @@
+---
+- name: "Ensure tools directory exists"
+  file:
+    path: /tools
+    state: directory
+    mode: '0755'
+    owner: vagrant
+    group: vagrant
+
+- name: "Clone Z3 Repository"
+  git:
+    repo: "https://github.com/Z3Prover/z3.git"
+    dest: /tools/z3
+
+- name: "Run mk_make.py script in Z3"
+  shell: cd /tools/z3 ; python scripts/mk_make.py --python
+  args:
+    creates: "/tools/z3/build/Makefile"
+
+- name: "Compile Z3"
+  shell: cd /tools/z3/build ; make
+  args:
+    creates: "/tools/z3/build/z3"
+
+- name: "Install Z3"
+  shell: cd /tools/z3/build; make install
+  args:
+    creates: "/usr/local/bin/z3"
+
+  
